@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>G — curated.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #030303;
+      --white: #F8F8F6;
+      --dim: #444;
+      --accent-gold: #D4AF37; 
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ─── SCANLINE BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+      pointer-events: none; z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header { text-align: center; margin-bottom: 4rem; animation: luxEntrance 1.5s ease-out both; }
+
+    .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(8rem, 38vw, 11rem);
+      font-weight: 300;
+      line-height: 0.8;
+      letter-spacing: -0.05em;
+      position: relative;
+      display: inline-block;
+      color: #FFF;
+    }
+
+    /* THE GOLD GLOW LINE */
+    .name::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      box-shadow: 0 0 15px var(--accent-gold);
+      opacity: 0.8;
+    }
+
+    .subtitle {
+      font-size: 0.55rem;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      color: var(--dim); 
+      margin-top: 3.5rem; 
+      font-weight: 600;
+    }
+
+    .links-wrapper { width: 100%; display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; animation: luxEntrance 1.5s 0.3s ease-out both; }
+
+    /* ─── SHARED FLAWLESS STYLE ─── */
+    .flawless-link {
+      display: flex; align-items: center; gap: 1.2rem; 
+      padding: 0.8rem 0;
+      text-decoration: none; color: var(--white); 
+      background: transparent;
+      border: none;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .flawless-link:hover { transform: translateX(8px); }
+
+    .icon-wrap {
+      width: 40px; height: 40px; 
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    
+    .icon-wrap::after {
+      content: ''; position: absolute; inset: 0; background: var(--accent-gold); 
+      filter: blur(15px); border-radius: 50%; opacity: 0; transition: 0.5s; z-index: -1;
+    }
+    
+    .flawless-link:hover .icon-wrap::after { opacity: 0.12; }
+    
+    .icon-wrap svg { width: 20px; height: 20px; color: #666; transition: 0.4s; }
+    .flawless-link:hover .icon-wrap svg { color: var(--accent-gold); }
+
+    .link-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .link-label { font-size: 0.48rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--dim); transition: 0.4s; }
+    .link-handle { font-size: 0.9rem; font-weight: 400; transition: 0.4s; }
+
+    .flawless-link:hover .link-label { color: #888; }
+    .flawless-link:hover .link-handle { color: #FFF; letter-spacing: 0.03em; }
+
+    /* Hover Badge */
+    .link-badge { width: 6px; height: 6px; border-radius: 50%; background: transparent; transition: 0.4s; }
+    .flawless-link:hover .link-badge { background: var(--accent-gold); box-shadow: 0 0 8px var(--accent-gold); }
+
+    /* ─── HIDDEN SECTION ─── */
+    #tugz-section { 
+      display: none; 
+      flex-direction: column; 
+      gap: 2rem; 
+      padding-top: 2rem; 
+      margin-top: 1rem;
+      border-top: 1px solid #111;
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    .footer { margin-top: 6rem; font-size: 0.45rem; letter-spacing: 0.4em; text-transform: uppercase; color: #1a1a1a; }
+
+    .lock-btn {
+      position: fixed; bottom: 30px; right: 30px; width: 40px; height: 40px;
+      background: transparent; border: none; opacity: 0.2; cursor: pointer; z-index: 100; transition: 0.4s;
+    }
+    .lock-btn:hover { opacity: 0.8; }
+    .lock-btn svg { width: 14px; height: 14px; color: var(--accent-gold); }
+
+    @keyframes luxEntrance { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="name">G</div>
+      <div class="subtitle">curated works.</div>
+    </div>
+
+    <div class="links-wrapper">
+      <a class="flawless-link" href="https://www.instagram.com/wyd_georgio" target="_blank">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path></svg></div>
+        <div class="link-text"><span class="link-label">curated / instagram</span><span class="link-handle">@wyd_georgio</span></div>
+        <div class="link-badge"></div>
+      </a>
+
+      <a class="flawless-link" href="https://www.tiktok.com/@wyd_georgio" target="_blank">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></div>
+        <div class="link-text"><span class="link-label">motion / tiktok</span><span class="link-handle">@wyd_georgio</span></div>
+        <div class="link-badge"></div>
+      </a>
+
+      <div id="tugz-section">
+        <p class="subtitle" style="text-align:center; margin: 0 0 1.5rem 0; opacity: 0.5;">private / tugz</p>
+        
+        <a class="flawless-link" href="https://www.instagram.com/wyd_tugz" target="_blank">
+          <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path></svg></div>
+          <div class="link-text"><span class="link-label">identity / instagram</span><span class="link-handle">@wyd_tugz</span></div>
+          <div class="link-badge"></div>
+        </a>
+
+        <a class="flawless-link" href="https://www.tiktok.com/@wyd_tugz" target="_blank">
+          <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg></div>
+          <div class="link-text"><span class="link-label">raw / tiktok</span><span class="link-handle">@wyd_tugz</span></div>
+          <div class="link-badge"></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">© curated by G — 2026</div>
+  </div>
+
+  <button class="lock-btn" onclick="checkCode()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  </button>
+
+  <script>
+    function checkCode() {
+      const code = prompt("Admin Code:");
+      if (code === "8989") {
+        document.getElementById('tugz-section').style.display = 'flex';
+        // Auto-scroll to show the new links
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      } else if (code !== null) {
+        alert("Denied.");
+      }
+    }
+  </script>
+</body>
+</html>
